@@ -11,7 +11,7 @@ FetchContent_MakeAvailable(googletest)
 FILE(GLOB TEST_SOURCES *.cpp)
 add_executable(unit_tests ${TEST_SOURCES})
 
-target_link_libraries(unit_tests GTest::gtest_main)
+target_link_libraries(unit_tests GTest::gtest_main parser)
 
 include(GoogleTest)
-gtest_discover_tests(unit_tests)
+gtest_add_tests(TARGET unit_tests)
