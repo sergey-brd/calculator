@@ -13,9 +13,19 @@ enum class State
   NONE
 };
 
-std::vector<std::string> Lexer::tokenize(const std::string &i_input)
+Token createToken(const std::string &i_value, State i_state)
 {
-  std::vector<std::string> ret;
+  TokenType type = TokenType::NUMBER;
+  if (i_state == State::WORD)
+    type = TokenType::WORD;
+  if (i_state == State::SYMBOL)
+    type = TokenType::SYMBOL;
+  return {i_value, type};
+}
+
+std::vector<Token> Lexer::tokenize(const std::string &i_input)
+{
+  std::vector<Token> ret;
   int prevToken = 0;
   State state = State::NONE;
   for (int i = 0; i < i_input.size(); ++i)
@@ -28,7 +38,7 @@ std::vector<std::string> Lexer::tokenize(const std::string &i_input)
         state == State::SPACE)                                                      // it was space
     {
       if (state != State::SPACE && state != State::NONE)
-        ret.push_back(i_input.substr(prevToken, i - prevToken));
+        ret.emplace_back(createToken(i_input.substr(prevToken, i - prevToken), state));
       prevToken = i;
       state = State::NONE;
     }
@@ -57,6 +67,6 @@ std::vector<std::string> Lexer::tokenize(const std::string &i_input)
   }
   // save last token
   if (state != State::SPACE && state != State::NONE)
-    ret.push_back(i_input.substr(prevToken, i_input.size() - prevToken));
+    ret.emplace_back(createToken(i_input.substr(prevToken, i_input.size() - prevToken), state));
   return ret;
 }
