@@ -3,70 +3,64 @@
 #include <cctype>
 #include <iostream>
 
-enum class State
+Token::Token(const std::string &i_value, TokenType i_type) : value(i_value), type(i_type)
 {
-  NUMBER,
-  FLOAT_NUMBER,
-  WORD,
-  SYMBOL,
-  SPACE,
-  NONE
+  if (type == TokenType::FLOAT_NUMBER)
+    type = TokenType::NUMBER;
+  else if (type == TokenType::SYMBOL)
+  {
+    assert(value.size() == 1);
+    if (value[0] == '(')
+      type = TokenType::OPENING_BRACKET;
+    else if (value[0] == ')')
+      type = TokenType::CLOSING_BRACKET;
+    else
+      type = TokenType::OPERATOR;
+  }
 };
-
-Token createToken(const std::string &i_value, State i_state)
-{
-  TokenType type = TokenType::NUMBER;
-  if (i_state == State::WORD)
-    type = TokenType::WORD;
-  if (i_state == State::SYMBOL)
-    type = TokenType::SYMBOL;
-  return {i_value, type};
-}
 
 std::vector<Token> Lexer::tokenize(const std::string &i_input)
 {
   std::vector<Token> ret;
   int prevToken = 0;
-  State state = State::NONE;
+  TokenType type = TokenType::NONE;
   for (int i = 0; i < i_input.size(); ++i)
   {
     // check if token ends
-    if (state == State::NUMBER && !std::isdigit(i_input[i]) && i_input[i] != '.' || // after number is not point and not number
-        state == State::FLOAT_NUMBER && !std::isdigit(i_input[i]) ||                // after float number is not number
-        state == State::WORD && !std::isalpha(i_input[i]) ||                        // after word is not letter
-        state == State::SYMBOL ||                                                   // it was symbol
-        state == State::SPACE)                                                      // it was space
+    if (type == TokenType::NUMBER && !std::isdigit(i_input[i]) && i_input[i] != '.' || // after number is not point and not number
+        type == TokenType::FLOAT_NUMBER && !std::isdigit(i_input[i]) ||                // after float number is not number
+        type == TokenType::WORD && !std::isalpha(i_input[i]) ||                        // after word is not letter
+        type == TokenType::SYMBOL ||                                                   // it was symbol
+        type == TokenType::SPACE)                                                      // it was space
     {
-      if (state != State::SPACE && state != State::NONE)
-        ret.emplace_back(createToken(i_input.substr(prevToken, i - prevToken), state));
+      if (type != TokenType::SPACE && type != TokenType::NONE)
+        ret.emplace_back(i_input.substr(prevToken, i - prevToken), type);
       prevToken = i;
-      state = State::NONE;
+      type = TokenType::NONE;
     }
     // if token starts
-    if (state == State::NONE)
+    if (type == TokenType::NONE)
     {
       if (std::isdigit(i_input[i]))
-        state = State::NUMBER;
+        type = TokenType::NUMBER;
       else if (i_input[i] == '.')
-        state = State::FLOAT_NUMBER;
+        type = TokenType::FLOAT_NUMBER;
       else if (std::isalpha(i_input[i]))
-        state = State::WORD;
+        type = TokenType::WORD;
       else if (std::isspace(i_input[i]))
-        state = State::SPACE;
+        type = TokenType::SPACE;
       else
-        state = State::SYMBOL;
+        type = TokenType::SYMBOL;
     }
     // else token continues
     else
     {
-      if (i_input[i] == '.' && state == State::NUMBER)
-      {
-        state = State::FLOAT_NUMBER;
-      }
+      if (i_input[i] == '.' && type == TokenType::NUMBER)
+        type = TokenType::FLOAT_NUMBER;
     }
   }
   // save last token
-  if (state != State::SPACE && state != State::NONE)
-    ret.emplace_back(createToken(i_input.substr(prevToken, i_input.size() - prevToken), state));
+  if (type != TokenType::SPACE && type != TokenType::NONE)
+    ret.emplace_back(i_input.substr(prevToken, i_input.size() - prevToken), type);
   return ret;
 }

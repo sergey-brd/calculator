@@ -20,16 +20,16 @@ TEST(Lexer, Expression)
 {
   auto out = Lexer::tokenize("0.25 * (-5 + sin(1.57))");
   std::vector<Token> tokens = {{"0.25", TokenType::NUMBER},
-                               {"*", TokenType::SYMBOL},
-                               {"(", TokenType::SYMBOL},
-                               {"-", TokenType::SYMBOL},
+                               {"*", TokenType::OPERATOR},
+                               {"(", TokenType::OPENING_BRACKET},
+                               {"-", TokenType::OPERATOR},
                                {"5", TokenType::NUMBER},
-                               {"+", TokenType::SYMBOL},
+                               {"+", TokenType::OPERATOR},
                                {"sin", TokenType::WORD},
-                               {"(", TokenType::SYMBOL},
+                               {"(", TokenType::OPENING_BRACKET},
                                {"1.57", TokenType::NUMBER},
-                               {")", TokenType::SYMBOL},
-                               {")", TokenType::SYMBOL}};
+                               {")", TokenType::CLOSING_BRACKET},
+                               {")", TokenType::CLOSING_BRACKET}};
   EXPECT_EQ(out.size(), tokens.size());
   for (int i = 0; i < out.size(); ++i)
   {
