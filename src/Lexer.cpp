@@ -11,12 +11,17 @@ Token::Token(const std::string &i_value, TokenType i_type) : value(i_value), typ
   else if (type == TokenType::SYMBOL)
   {
     assert(value.size() == 1);
-    if (value[0] == '(')
+    switch (value[0])
+    {
+    case '(':
       type = TokenType::OPENING_BRACKET;
-    else if (value[0] == ')')
+      break;
+    case ')':
       type = TokenType::CLOSING_BRACKET;
-    else
+      break;
+    default:
       type = TokenType::OPERATOR;
+    }
   }
 };
 
