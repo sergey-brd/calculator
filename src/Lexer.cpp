@@ -1,5 +1,6 @@
 #include "Lexer.h"
 
+#include <cassert>
 #include <cctype>
 #include <iostream>
 
