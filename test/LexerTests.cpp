@@ -1,4 +1,5 @@
 #include "Lexer.h"
+#include "Token.h"
 
 #include <gtest/gtest.h>
 
