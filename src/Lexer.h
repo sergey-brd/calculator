@@ -3,10 +3,10 @@
 #include "Token.h"
 
 #include <string>
-#include <vector>
+#include <list>
 
 class Lexer
 {
 public:
-  static std::vector<Token> tokenize(const std::string &i_input);
+  static std::list<Token> tokenize(const std::string &i_input);
 };

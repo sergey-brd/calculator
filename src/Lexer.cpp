@@ -5,9 +5,9 @@
 #include <cctype>
 #include <iostream>
 
-std::vector<Token> Lexer::tokenize(const std::string &i_input)
+std::list<Token> Lexer::tokenize(const std::string &i_input)
 {
-  std::vector<Token> ret;
+  std::list<Token> ret;
   int prevToken = 0;
   TokenType type = TokenType::NONE;
   for (int i = 0; i < i_input.size(); ++i)
