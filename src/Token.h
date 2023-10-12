@@ -6,6 +6,10 @@ enum class TokenType
 {
   NUMBER,
   WORD,
+  PLUS,
+  MINUS,
+  MULTIPLY,
+  DIVIDE,
   OPERATOR,
   OPENING_BRACKET,
   CLOSING_BRACKET,

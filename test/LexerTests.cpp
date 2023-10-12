@@ -21,11 +21,11 @@ TEST(Lexer, Expression)
 {
   auto out = Lexer::tokenize("0.25 * (-5 + sin(1.57))");
   std::vector<Token> tokens = {{"0.25", TokenType::NUMBER},
-                               {"*", TokenType::OPERATOR},
+                               {"*", TokenType::MULTIPLY},
                                {"(", TokenType::OPENING_BRACKET},
-                               {"-", TokenType::OPERATOR},
+                               {"-", TokenType::MINUS},
                                {"5", TokenType::NUMBER},
-                               {"+", TokenType::OPERATOR},
+                               {"+", TokenType::PLUS},
                                {"sin", TokenType::WORD},
                                {"(", TokenType::OPENING_BRACKET},
                                {"1.57", TokenType::NUMBER},
