@@ -13,11 +13,11 @@ std::list<Token> Lexer::tokenize(const std::string &i_input)
   for (int i = 0; i < i_input.size(); ++i)
   {
     // check if token ends
-    if (type == TokenType::NUMBER && !std::isdigit(i_input[i]) && i_input[i] != '.' || // after number is not point and not number
-        type == TokenType::FLOAT_NUMBER && !std::isdigit(i_input[i]) ||                // after float number is not number
-        type == TokenType::WORD && !std::isalpha(i_input[i]) ||                        // after word is not letter
-        type == TokenType::SYMBOL ||                                                   // it was symbol
-        type == TokenType::SPACE)                                                      // it was space
+    if (type == TokenType::INTEGER && !std::isdigit(i_input[i]) && i_input[i] != '.' || // after integer is not point and not digit
+        type == TokenType::FLOAT && !std::isdigit(i_input[i]) ||                        // after float is not digit
+        type == TokenType::WORD && !std::isalpha(i_input[i]) ||                         // after word is not letter
+        type == TokenType::SYMBOL ||                                                    // it was symbol
+        type == TokenType::SPACE)                                                       // it was space
     {
       if (type != TokenType::SPACE && type != TokenType::NONE)
         ret.emplace_back(i_input.substr(prevToken, i - prevToken), type);
@@ -28,9 +28,9 @@ std::list<Token> Lexer::tokenize(const std::string &i_input)
     if (type == TokenType::NONE)
     {
       if (std::isdigit(i_input[i]))
-        type = TokenType::NUMBER;
+        type = TokenType::INTEGER;
       else if (i_input[i] == '.')
-        type = TokenType::FLOAT_NUMBER;
+        type = TokenType::FLOAT;
       else if (std::isalpha(i_input[i]))
         type = TokenType::WORD;
       else if (std::isspace(i_input[i]))
@@ -41,8 +41,8 @@ std::list<Token> Lexer::tokenize(const std::string &i_input)
     // else token continues
     else
     {
-      if (i_input[i] == '.' && type == TokenType::NUMBER)
-        type = TokenType::FLOAT_NUMBER;
+      if (i_input[i] == '.' && type == TokenType::INTEGER)
+        type = TokenType::FLOAT;
     }
   }
   // save last token

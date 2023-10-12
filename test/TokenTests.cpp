@@ -2,18 +2,18 @@
 
 #include <gtest/gtest.h>
 
-TEST(Token, Number)
+TEST(Token, Integer)
 {
-  Token token("3", TokenType::NUMBER);
+  Token token("3", TokenType::INTEGER);
   EXPECT_EQ(token.value, "3");
-  EXPECT_EQ(token.type, TokenType::NUMBER);
+  EXPECT_EQ(token.type, TokenType::INTEGER);
 }
 
-TEST(Token, FloatNumber)
+TEST(Token, Float)
 {
-  Token token("3.14", TokenType::FLOAT_NUMBER);
+  Token token("3.14", TokenType::FLOAT);
   EXPECT_EQ(token.value, "3.14");
-  EXPECT_EQ(token.type, TokenType::NUMBER);
+  EXPECT_EQ(token.type, TokenType::FLOAT);
 }
 
 TEST(Token, Word)

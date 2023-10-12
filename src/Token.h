@@ -4,7 +4,8 @@
 
 enum class TokenType
 {
-  NUMBER,
+  INTEGER,
+  FLOAT,
   WORD,
   PLUS,
   MINUS,
