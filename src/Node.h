@@ -22,7 +22,7 @@ public:
     assert(m_nodes.size() == N);
   }
 
-  std::shared_ptr<Node> getChild(int i_idx)
+  std::shared_ptr<Node> getChild(int i_idx) const
   {
     assert(0 <= i_idx && i_idx < N);
     return m_nodes[i_idx];
