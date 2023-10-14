@@ -19,14 +19,14 @@ public:
   T get() { assert(false); };
 
   template <>
-  int get()
+  inline int get()
   {
     assert(m_isInteger);
     return m_integerValue;
   }
 
   template <>
-  double get()
+  inline double get()
   {
     if (m_isInteger)
       return static_cast<double>(m_integerValue);
