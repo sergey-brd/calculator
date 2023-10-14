@@ -24,6 +24,16 @@ TEST(BinaryNodeTests, AdditionNodeFloat)
   EXPECT_NEAR(value.get<double>(), 1 + 2, 0.001);
 }
 
+TEST(BinaryNodeTests, AdditionNodeFloat2)
+{
+  std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
+                                              std::make_shared<FloatNode>("2.0")};
+  auto node = std::make_shared<AdditionNode>(nodes);
+  auto value = node->eval();
+  EXPECT_FALSE(value.isInteger());
+  EXPECT_NEAR(value.get<double>(), 1 + 2, 0.001);
+}
+
 TEST(BinaryNodeTests, SubstractionNodeInteger)
 {
   std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
@@ -38,6 +48,16 @@ TEST(BinaryNodeTests, SubstractionNodeFloat)
 {
   std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<FloatNode>("1.0"),
                                               std::make_shared<IntegerNode>("2")};
+  auto node = std::make_shared<SubstractionNode>(nodes);
+  auto value = node->eval();
+  EXPECT_FALSE(value.isInteger());
+  EXPECT_NEAR(value.get<double>(), 1 - 2, 0.001);
+}
+
+TEST(BinaryNodeTests, SubstractionNodeFloat2)
+{
+  std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
+                                              std::make_shared<FloatNode>("2.0")};
   auto node = std::make_shared<SubstractionNode>(nodes);
   auto value = node->eval();
   EXPECT_FALSE(value.isInteger());
@@ -64,6 +84,16 @@ TEST(BinaryNodeTests, MultiplicationNodeFloat)
   EXPECT_NEAR(value.get<double>(), 1 * 2, 0.001);
 }
 
+TEST(BinaryNodeTests, MultiplicationNodeFloat2)
+{
+  std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
+                                              std::make_shared<FloatNode>("2.0")};
+  auto node = std::make_shared<MultiplicationNode>(nodes);
+  auto value = node->eval();
+  EXPECT_FALSE(value.isInteger());
+  EXPECT_NEAR(value.get<double>(), 1 * 2, 0.001);
+}
+
 TEST(BinaryNodeTests, DivisionNodeInteger)
 {
   std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
@@ -78,6 +108,16 @@ TEST(BinaryNodeTests, DivisionNodeFloat)
 {
   std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<FloatNode>("1.0"),
                                               std::make_shared<IntegerNode>("2")};
+  auto node = std::make_shared<DivisionNode>(nodes);
+  auto value = node->eval();
+  EXPECT_FALSE(value.isInteger());
+  EXPECT_NEAR(value.get<double>(), 1.0 / 2, 0.001);
+}
+
+TEST(BinaryNodeTests, DivisionNodeFloat2)
+{
+  std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
+                                              std::make_shared<FloatNode>("2.0")};
   auto node = std::make_shared<DivisionNode>(nodes);
   auto value = node->eval();
   EXPECT_FALSE(value.isInteger());
