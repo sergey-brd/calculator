@@ -10,10 +10,13 @@ TEST(IntegerNode, Create)
       { IntegerNode integer("3"); });
 }
 
-TEST(IntegerNode, GetValue)
+TEST(IntegerNode, Eval)
 {
   IntegerNode number("3");
-  EXPECT_EQ(number.getValue(), 3);
+  auto value = number.eval();
+  EXPECT_TRUE(value.isInteger());
+  EXPECT_EQ(value.get<int>(), 3);
+  EXPECT_NEAR(value.get<double>(), 3, 0.001);
 }
 
 TEST(FloatNode, Create)
@@ -22,8 +25,10 @@ TEST(FloatNode, Create)
       { FloatNode integer("3.14"); });
 }
 
-TEST(FloatNode, GetValue)
+TEST(FloatNode, Eval)
 {
   FloatNode number("3.14");
-  EXPECT_NEAR(number.getValue(), 3.14, 0.01);
+  auto value = number.eval();
+  EXPECT_FALSE(value.isInteger());
+  EXPECT_NEAR(value.get<double>(), 3.14, 0.001);
 }
