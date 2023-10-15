@@ -42,3 +42,33 @@ public:
     return m_error.c_str();
   }
 };
+
+class UnknownFunctionException : public std::runtime_error
+{
+  std::string m_function;
+  std::vector<std::string> m_expected;
+  std::string m_error;
+
+public:
+  UnknownFunctionException(const std::string &i_function, const std::vector<std::string> &i_expected)
+      : std::runtime_error(""), m_function(i_function), m_expected(i_expected)
+  {
+    std::ostringstream error;
+    error << "Function from list [";
+    for (int i = 0; i < m_expected.size(); ++i)
+    {
+      if (i == 0)
+        error << m_expected[0];
+      else
+        error << ", " << m_expected[i];
+    }
+    error << "] is expected, but ";
+    error << m_function << " is found.";
+    m_error = error.str();
+  };
+
+  const char *what() const noexcept
+  {
+    return m_error.c_str();
+  }
+};

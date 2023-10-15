@@ -1,5 +1,6 @@
 #include "UnaryNodeFactory.h"
 
+#include "Exception.h"
 #include "NullaryNode.h"
 #include "UnaryNode.h"
 
@@ -57,4 +58,11 @@ TEST(UnaryNodeFactoryTests, GetNames)
   EXPECT_EQ(ret.size(), names.size());
   for (int i = 0; i < ret.size(); ++i)
     EXPECT_EQ(ret[i], names[i]);
+}
+
+TEST(UnaryNodeFactoryTests, UnknownFunctionException)
+{
+  std::string name = "abs";
+  auto node1 = std::make_shared<IntegerNode>("1");
+  EXPECT_THROW(UnaryNodeFactory::create(name, node1), UnknownFunctionException);
 }

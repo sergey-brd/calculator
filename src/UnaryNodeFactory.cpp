@@ -1,5 +1,6 @@
 #include "UnaryNodeFactory.h"
 
+#include "Exception.h"
 #include "UnaryNode.h"
 
 class UnaryPlusCreator : public Creator
@@ -68,5 +69,5 @@ std::shared_ptr<Node> UnaryNodeFactory::create(const std::string &i_name,
   for (const auto creator : m_creators)
     if (i_name == creator->getName())
       return creator->create(i_node);
-  assert(false);
+  throw UnknownFunctionException(i_name, UnaryNodeFactory::getNames());
 }
