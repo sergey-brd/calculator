@@ -6,13 +6,12 @@
 #include "UnaryNodeFactory.h"
 #include "UnaryNode.h"
 
-#include <cassert>
-
 std::shared_ptr<Node> Parser::parse(const std::list<Token> &i_tokens)
 {
   m_tokens = i_tokens;
   auto expression = parseExpression();
-  assert(m_tokens.empty());
+  if (!m_tokens.empty())
+    throw UnexpectedTokenException(m_tokens.front().value, {});
   return expression;
 }
 
@@ -69,7 +68,7 @@ std::shared_ptr<Node> Parser::parseFactor()
       if (m_tokens.front().type == TokenType::CLOSING_BRACKET)
         m_tokens.pop_front();
       else
-        assert(false);
+        throw UnexpectedTokenException(m_tokens.front().value, {")"});
       return expression;
     }
     else if (m_tokens.front().type == TokenType::INTEGER)
@@ -92,7 +91,7 @@ std::shared_ptr<Node> Parser::parseFactor()
       return UnaryNodeFactory::create(token, factor);
     }
     else
-      assert(false);
+      throw UnexpectedTokenException(m_tokens.front().value, {"(", "integer", "float", "+", "-", "sin", "cos"});
   }
-  throw EmptyTokenException();
+  throw UnexpectedTokenException("", {"(", "integer", "float", "+", "-", "sin", "cos"});
 }

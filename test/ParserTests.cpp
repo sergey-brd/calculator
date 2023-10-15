@@ -87,5 +87,20 @@ TEST_F(ParserTests, Float)
 
 TEST_F(ParserTests, ExceptionEmpty)
 {
-  EXPECT_THROW(parse(""), EmptyTokenException);
+  EXPECT_THROW(parse(""), UnexpectedTokenException);
+}
+
+TEST_F(ParserTests, ExceptionWrongExpression)
+{
+  EXPECT_THROW(parse("1+2("), UnexpectedTokenException);
+}
+
+TEST_F(ParserTests, ExceptionNoClosingBracket)
+{
+  EXPECT_THROW(parse("(1+2"), UnexpectedTokenException);
+}
+
+TEST_F(ParserTests, ExceptionUknownUnaryFunction)
+{
+  EXPECT_THROW(parse("abs(-5)"), UnexpectedTokenException);
 }
