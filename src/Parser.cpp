@@ -6,6 +6,8 @@
 #include "UnaryNodeFactory.h"
 #include "UnaryNode.h"
 
+#include <cassert>
+
 Parser::Parser()
 {
   m_expectedTokens = {"(", "integer", "float"};
@@ -24,49 +26,66 @@ std::shared_ptr<Node> Parser::parse(const std::list<Token> &i_tokens)
 
 std::shared_ptr<Node> Parser::parseExpression()
 {
-  auto term1 = parseTerm();
-  if (!m_tokens.empty())
-  {
-    if (m_tokens.front().type == TokenType::PLUS)
-    {
-      m_tokens.pop_front();
-      auto term2 = parseExpression();
-      return std::make_shared<AdditionNode>(std::vector{term1, term2});
-    }
-    else if (m_tokens.front().type == TokenType::MINUS)
-    {
-      m_tokens.pop_front();
-      auto term2 = parseExpression();
-      return std::make_shared<SubstractionNode>(std::vector{term1, term2});
-    }
-  }
-  return term1;
+  auto term = parseTerm();
+  if (auto tail = parseExpressionTail(term))
+    return tail;
+  return term;
+}
+
+std::shared_ptr<Node> Parser::parseExpressionTail(std::shared_ptr<Node> i_term)
+{
+  if (m_tokens.empty() || m_tokens.front().type != TokenType::PLUS &&
+                              m_tokens.front().type != TokenType::MINUS)
+    return {};
+
+  auto tokenType = m_tokens.front().type;
+  m_tokens.pop_front();
+  auto term = parseTerm();
+
+  std::shared_ptr<Node> expression;
+  if (tokenType == TokenType::PLUS)
+    expression = std::make_shared<AdditionNode>(std::vector{i_term, term});
+  else if (tokenType == TokenType::MINUS)
+    expression = std::make_shared<SubstractionNode>(std::vector{i_term, term});
+  assert(expression);
+
+  if (auto tail = parseExpressionTail(expression))
+    return tail;
+  return expression;
 }
 
 std::shared_ptr<Node> Parser::parseTerm()
 {
-  auto factor1 = parseFactor();
-  if (!m_tokens.empty())
-  {
-    if (m_tokens.front().type == TokenType::MULTIPLY)
-    {
-      m_tokens.pop_front();
-      auto factor2 = parseTerm();
-      return std::make_shared<MultiplicationNode>(std::vector{factor1, factor2});
-    }
-    else if (m_tokens.front().type == TokenType::DIVIDE)
-    {
-      m_tokens.pop_front();
-      auto factor2 = parseTerm();
-      return std::make_shared<DivisionNode>(std::vector{factor1, factor2});
-    }
-  }
-  return factor1;
+  auto factor = parseFactor();
+  if (auto tail = parseTermTail(factor))
+    return tail;
+  return factor;
+}
+
+std::shared_ptr<Node> Parser::parseTermTail(std::shared_ptr<Node> i_factor)
+{
+  if (m_tokens.empty() || m_tokens.front().type != TokenType::MULTIPLY &&
+                              m_tokens.front().type != TokenType::DIVIDE)
+    return {};
+
+  auto tokenType = m_tokens.front().type;
+  m_tokens.pop_front();
+  auto factor = parseFactor();
+
+  std::shared_ptr<Node> term;
+  if (tokenType == TokenType::MULTIPLY)
+    term = std::make_shared<MultiplicationNode>(std::vector{i_factor, factor});
+  else if (tokenType == TokenType::DIVIDE)
+    term = std::make_shared<DivisionNode>(std::vector{i_factor, factor});
+  assert(term);
+
+  if (auto tail = parseTermTail(term))
+    return tail;
+  return term;
 }
 
 std::shared_ptr<Node> Parser::parseFactor()
 {
-
   if (m_tokens.empty())
     throw UnexpectedTokenException("", m_expectedTokens);
 

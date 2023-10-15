@@ -25,10 +25,12 @@ TEST_F(ParserTests, Addition)
   EXPECT_TRUE(node);
 }
 
-TEST_F(ParserTests, Addition2)
+TEST_F(ParserTests, TermOrder)
 {
-  auto node = dynamic_cast<AdditionNode *>(parse("1 + 2 + 3").get());
-  EXPECT_TRUE(node);
+  auto value = parse("1 - 2 + 3")->eval();
+  EXPECT_TRUE(value.isInteger());
+  auto valueInt = value.get<int>();
+  EXPECT_EQ(valueInt, 2);
 }
 
 TEST_F(ParserTests, Substraction)
@@ -43,10 +45,12 @@ TEST_F(ParserTests, Multiplication)
   EXPECT_TRUE(node);
 }
 
-TEST_F(ParserTests, Multiplication2)
+TEST_F(ParserTests, FactorOrder)
 {
-  auto node = dynamic_cast<MultiplicationNode *>(parse("1 * 2 * 3").get());
-  EXPECT_TRUE(node);
+  auto value = parse("12 / 6 / 2")->eval();
+  EXPECT_TRUE(value.isInteger());
+  auto valueInt = value.get<int>();
+  EXPECT_EQ(valueInt, 1);
 }
 
 TEST_F(ParserTests, Division)
