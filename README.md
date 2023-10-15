@@ -51,4 +51,3 @@ Calculator uses C++ rule for return value:
     -5 / 2 == -2
     -5 / 2. == -2.5
     ```
-
