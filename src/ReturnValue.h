@@ -17,19 +17,19 @@ public:
 
   template <typename T>
   T get() { assert(false); };
-
-  template <>
-  int get()
-  {
-    assert(m_isInteger);
-    return m_integerValue;
-  }
-
-  template <>
-  double get()
-  {
-    if (m_isInteger)
-      return static_cast<double>(m_integerValue);
-    return m_floatValue;
-  }
 };
+
+template <>
+inline int ReturnValue::get<int>()
+{
+  assert(m_isInteger);
+  return m_integerValue;
+}
+
+template <>
+inline double ReturnValue::get<double>()
+{
+  if (m_isInteger)
+    return static_cast<double>(m_integerValue);
+  return m_floatValue;
+}
