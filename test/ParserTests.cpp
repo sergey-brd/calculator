@@ -43,6 +43,12 @@ TEST_F(ParserTests, Multiplication)
   EXPECT_TRUE(node);
 }
 
+TEST_F(ParserTests, Multiplication2)
+{
+  auto node = dynamic_cast<MultiplicationNode *>(parse("1 * 2 * 3").get());
+  EXPECT_TRUE(node);
+}
+
 TEST_F(ParserTests, Division)
 {
   auto node = dynamic_cast<DivisionNode *>(parse("1 / 2").get());

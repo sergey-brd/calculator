@@ -44,13 +44,13 @@ std::shared_ptr<Node> Parser::parseTerm()
     if (m_tokens.front().type == TokenType::MULTIPLY)
     {
       m_tokens.pop_front();
-      auto factor2 = parseFactor();
+      auto factor2 = parseTerm();
       return std::make_shared<MultiplicationNode>(std::vector{factor1, factor2});
     }
     else if (m_tokens.front().type == TokenType::DIVIDE)
     {
       m_tokens.pop_front();
-      auto factor2 = parseFactor();
+      auto factor2 = parseTerm();
       return std::make_shared<DivisionNode>(std::vector{factor1, factor2});
     }
   }
