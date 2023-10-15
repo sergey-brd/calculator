@@ -1,6 +1,8 @@
 #pragma once
 
-#include <cassert>
+#include "Exception.h"
+
+#include <typeinfo>
 
 class ReturnValue
 {
@@ -16,7 +18,12 @@ public:
   bool isInteger() { return m_isInteger; }
 
   template <typename T>
-  T get() { assert(false); };
+  T get()
+  {
+    std::ostringstream type;
+    type << "ReturnValue::get<" << typeid(T).name() << ">";
+    throw UnknownImplementationException(type.str());
+  };
 };
 
 template <>

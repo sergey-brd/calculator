@@ -16,3 +16,9 @@ TEST(RetrunValueTests, Float)
   EXPECT_FALSE(valueFloat.isInteger());
   EXPECT_NEAR(valueFloat.get<double>(), 3.14, 0.001);
 }
+
+TEST(RetrunValueTests, UnknownImplementationException)
+{
+  ReturnValue valueInt(3);
+  EXPECT_THROW(valueInt.get<float>(), UnknownImplementationException);
+}

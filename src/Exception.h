@@ -93,3 +93,23 @@ public:
     return m_error.c_str();
   }
 };
+
+class UnknownImplementationException : public std::runtime_error
+{
+  std::string m_method;
+  std::string m_error;
+
+public:
+  UnknownImplementationException(const std::string &i_method)
+      : std::runtime_error(""), m_method(i_method)
+  {
+    std::ostringstream error;
+    error << "Unknown implementation of " << m_method << " method.";
+    m_error = error.str();
+  };
+
+  const char *what() const noexcept
+  {
+    return m_error.c_str();
+  }
+};
