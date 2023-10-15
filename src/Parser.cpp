@@ -1,5 +1,6 @@
 #include "Parser.h"
 
+#include "Exception.h"
 #include "BinaryNode.h"
 #include "NullaryNode.h"
 #include "UnaryNodeFactory.h"
@@ -10,7 +11,6 @@
 std::shared_ptr<Node> Parser::parse(const std::list<Token> &i_tokens)
 {
   m_tokens = i_tokens;
-  assert(!m_tokens.empty());
   auto expression = parseExpression();
   assert(m_tokens.empty());
   return expression;
@@ -94,6 +94,5 @@ std::shared_ptr<Node> Parser::parseFactor()
     else
       assert(false);
   }
-  else
-    assert(false);
+  throw EmptyTokenException();
 }

@@ -1,5 +1,6 @@
 #include "Parser.h"
 
+#include "Exception.h"
 #include "BinaryNode.h"
 #include "Lexer.h"
 #include "NullaryNode.h"
@@ -82,4 +83,9 @@ TEST_F(ParserTests, Float)
 {
   auto node = dynamic_cast<FloatNode *>(parse("3.14").get());
   EXPECT_TRUE(node);
+}
+
+TEST_F(ParserTests, ExceptionEmpty)
+{
+  EXPECT_THROW(parse(""), EmptyTokenException);
 }
