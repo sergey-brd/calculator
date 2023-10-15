@@ -22,3 +22,9 @@ TEST(RetrunValueTests, UnknownImplementationException)
   ReturnValue valueInt(3);
   EXPECT_THROW(valueInt.get<float>(), UnknownImplementationException);
 }
+
+TEST(RetrunValueTests, WrongValueTypeException)
+{
+  ReturnValue valueFloat(3.14);
+  EXPECT_THROW(valueFloat.get<int>(), WrongValueTypeException);
+}

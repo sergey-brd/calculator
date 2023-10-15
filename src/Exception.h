@@ -113,3 +113,23 @@ public:
     return m_error.c_str();
   }
 };
+
+class WrongValueTypeException : public std::runtime_error
+{
+  std::string m_type;
+  std::string m_error;
+
+public:
+  WrongValueTypeException(const std::string &i_type)
+      : std::runtime_error(""), m_type(i_type)
+  {
+    std::ostringstream error;
+    error << "Cannot get value for " << m_type << " type.";
+    m_error = error.str();
+  };
+
+  const char *what() const noexcept
+  {
+    return m_error.c_str();
+  }
+};

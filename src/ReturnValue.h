@@ -29,7 +29,8 @@ public:
 template <>
 inline int ReturnValue::get<int>()
 {
-  assert(m_isInteger);
+  if (!m_isInteger)
+    throw WrongValueTypeException("int");
   return m_integerValue;
 }
 
