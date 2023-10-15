@@ -1,3 +1,4 @@
+#include "Exception.h"
 #include "Interpreter.h"
 #include "Lexer.h"
 #include "Parser.h"
@@ -11,12 +12,17 @@ int main()
   Interpreter interpreter;
   while (std::getline(std::cin, input))
   {
-    if (input.empty())
-      break;
-    auto lexemes = Lexer::tokenize(input);
-    auto node = parser.parse(lexemes);
-    auto result = interpreter.eval(node);
-    std::cout << (result.isInteger() ? result.get<int>() : result.get<double>()) << std::endl;
+    try
+    {
+      auto lexemes = Lexer::tokenize(input);
+      auto node = parser.parse(lexemes);
+      auto result = interpreter.eval(node);
+      std::cout << (result.isInteger() ? result.get<int>() : result.get<double>()) << std::endl;
+    }
+    catch (const std::exception& e)
+    {
+      std::cout << e.what() << std::endl;
+    }
   }
 
   return 0;
