@@ -8,30 +8,30 @@ To use this calculator, follow these steps:
 
 1. Clone the repository using the following command:
 
-    ```
-    git clone https://github.com/sergey-brd/calculator.git
-    ```
+```
+git clone https://github.com/sergey-brd/calculator.git
+```
 
 2. Navigate to the directory with the application and build it:
 
-    ```
-    cd calculator
-    mkdir build
-    cd build
-    cmake --build .
-    ```
+```
+cd calculator
+mkdir build
+cd build
+cmake --build .
+```
 
 3. Run the Unit Tests.
 
-    ```
-    ./unit_test
-    ```
+```
+./unit_test
+```
 
 4. Run the application following the instructions in the "Usage" section.
 
-    ```
-    ./calculator
-    ```
+```
+./calculator
+```
 
 ## Usage
 
@@ -47,5 +47,7 @@ Calculator supports the following operations: +, -, *, /, sin, cos
 
 Calculator uses C++ rule for return value:
 
-    -5 / 2 == -2
-    -5 / 2. == -2.5
+```
+-5 / 2 == -2
+-5 / 2. == -2.5
+```
