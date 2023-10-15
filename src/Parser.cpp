@@ -6,6 +6,13 @@
 #include "UnaryNodeFactory.h"
 #include "UnaryNode.h"
 
+Parser::Parser()
+{
+  m_expectedTokens = {"(", "integer", "float"};
+  auto unaryFucntionNames = UnaryNodeFactory::getNames();
+  std::copy(unaryFucntionNames.begin(), unaryFucntionNames.end(), std::back_inserter(m_expectedTokens));
+}
+
 std::shared_ptr<Node> Parser::parse(const std::list<Token> &i_tokens)
 {
   m_tokens = i_tokens;
@@ -59,12 +66,9 @@ std::shared_ptr<Node> Parser::parseTerm()
 
 std::shared_ptr<Node> Parser::parseFactor()
 {
-  auto expectedTokens = std::vector<std::string>{"(", "integer", "float"};
-  auto unaryFucntionNames = UnaryNodeFactory::getNames();
-  std::copy(unaryFucntionNames.begin(), unaryFucntionNames.end(), std::back_inserter(expectedTokens));
 
   if (m_tokens.empty())
-    throw UnexpectedTokenException("", expectedTokens);
+    throw UnexpectedTokenException("", m_expectedTokens);
 
   if (m_tokens.front().type == TokenType::OPENING_BRACKET)
   {
@@ -96,5 +100,5 @@ std::shared_ptr<Node> Parser::parseFactor()
     return UnaryNodeFactory::create(token, factor);
   }
 
-  throw UnexpectedTokenException(m_tokens.front().value, expectedTokens);
+  throw UnexpectedTokenException(m_tokens.front().value, m_expectedTokens);
 }

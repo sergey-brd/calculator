@@ -5,6 +5,8 @@
 
 #include <list>
 #include <memory>
+#include <string>
+#include <vector>
 
 // Grammar to parse:
 // expression = term | term + expression | term - expression
@@ -19,8 +21,9 @@ class Parser
   std::shared_ptr<Node> parseExpression();
   std::shared_ptr<Node> parseTerm();
   std::shared_ptr<Node> parseFactor();
+  std::vector<std::string> m_expectedTokens;
 
 public:
-  Parser() = default;
+  Parser();
   std::shared_ptr<Node> parse(const std::list<Token> &i_tokens);
 };
