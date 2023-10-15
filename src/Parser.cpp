@@ -70,10 +70,10 @@ std::shared_ptr<Node> Parser::parseFactor()
   {
     m_tokens.pop_front();
     auto expression = parseExpression();
-    if (m_tokens.front().type == TokenType::CLOSING_BRACKET)
+    if (!m_tokens.empty() && m_tokens.front().type == TokenType::CLOSING_BRACKET)
       m_tokens.pop_front();
     else
-      throw UnexpectedTokenException(m_tokens.front().value, {")"});
+      throw UnexpectedTokenException(!m_tokens.empty() ? m_tokens.front().value : "", {")"});
     return expression;
   }
   else if (m_tokens.front().type == TokenType::INTEGER)
