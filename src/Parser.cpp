@@ -59,39 +59,42 @@ std::shared_ptr<Node> Parser::parseTerm()
 
 std::shared_ptr<Node> Parser::parseFactor()
 {
-  if (!m_tokens.empty())
+  auto expectedTokens = std::vector<std::string>{"(", "integer", "float"};
+  auto unaryFucntionNames = UnaryNodeFactory::getNames();
+  std::copy(unaryFucntionNames.begin(), unaryFucntionNames.end(), std::back_inserter(expectedTokens));
+
+  if (m_tokens.empty())
+    throw UnexpectedTokenException("", expectedTokens);
+
+  if (m_tokens.front().type == TokenType::OPENING_BRACKET)
   {
-    if (m_tokens.front().type == TokenType::OPENING_BRACKET)
-    {
+    m_tokens.pop_front();
+    auto expression = parseExpression();
+    if (m_tokens.front().type == TokenType::CLOSING_BRACKET)
       m_tokens.pop_front();
-      auto expression = parseExpression();
-      if (m_tokens.front().type == TokenType::CLOSING_BRACKET)
-        m_tokens.pop_front();
-      else
-        throw UnexpectedTokenException(m_tokens.front().value, {")"});
-      return expression;
-    }
-    else if (m_tokens.front().type == TokenType::INTEGER)
-    {
-      auto integer = std::make_shared<IntegerNode>(m_tokens.front().value);
-      m_tokens.pop_front();
-      return integer;
-    }
-    else if (m_tokens.front().type == TokenType::FLOAT)
-    {
-      auto float_number = std::make_shared<FloatNode>(m_tokens.front().value);
-      m_tokens.pop_front();
-      return float_number;
-    }
-    else if (UnaryNodeFactory::isUnaryOperator(m_tokens.front().value))
-    {
-      auto token = m_tokens.front().value;
-      m_tokens.pop_front();
-      auto factor = parseFactor();
-      return UnaryNodeFactory::create(token, factor);
-    }
     else
-      throw UnexpectedTokenException(m_tokens.front().value, {"(", "integer", "float", "+", "-", "sin", "cos"});
+      throw UnexpectedTokenException(m_tokens.front().value, {")"});
+    return expression;
   }
-  throw UnexpectedTokenException("", {"(", "integer", "float", "+", "-", "sin", "cos"});
+  else if (m_tokens.front().type == TokenType::INTEGER)
+  {
+    auto integer = std::make_shared<IntegerNode>(m_tokens.front().value);
+    m_tokens.pop_front();
+    return integer;
+  }
+  else if (m_tokens.front().type == TokenType::FLOAT)
+  {
+    auto float_number = std::make_shared<FloatNode>(m_tokens.front().value);
+    m_tokens.pop_front();
+    return float_number;
+  }
+  else if (UnaryNodeFactory::isUnaryOperator(m_tokens.front().value))
+  {
+    auto token = m_tokens.front().value;
+    m_tokens.pop_front();
+    auto factor = parseFactor();
+    return UnaryNodeFactory::create(token, factor);
+  }
+
+  throw UnexpectedTokenException(m_tokens.front().value, expectedTokens);
 }
