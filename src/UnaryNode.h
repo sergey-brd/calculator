@@ -2,8 +2,6 @@
 
 #include "Node.h"
 
-#include <cassert>
-
 class UnaryPlusNode : public ArityNode<1>
 {
 public:
