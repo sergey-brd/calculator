@@ -49,3 +49,12 @@ TEST(UnaryNodeFactoryTests, Cos)
   auto node = dynamic_cast<CosNode *>(UnaryNodeFactory::create(name, node1).get());
   EXPECT_TRUE(node);
 }
+
+TEST(UnaryNodeFactoryTests, GetNames)
+{
+  auto ret = UnaryNodeFactory::getNames();
+  auto names = std::vector<std::string>{"+", "-", "sin", "cos"};
+  EXPECT_EQ(ret.size(), names.size());
+  for (int i = 0; i < ret.size(); ++i)
+    EXPECT_EQ(ret[i], names[i]);
+}

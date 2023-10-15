@@ -46,6 +46,14 @@ std::vector<std::shared_ptr<Creator>> UnaryNodeFactory::m_creators =
     {std::make_shared<UnaryPlusCreator>(), std::make_shared<UnaryMinusCreator>(),
      std::make_shared<SinCreator>(), std::make_shared<CosCreator>()};
 
+std::vector<std::string> UnaryNodeFactory::getNames()
+{
+  std::vector<std::string> names;
+  for (const auto creator : m_creators)
+    names.emplace_back(creator->getName());
+  return names;
+}
+
 bool UnaryNodeFactory::isUnaryOperator(const std::string &i_name)
 {
   for (const auto creator : m_creators)
