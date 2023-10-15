@@ -23,13 +23,13 @@ std::shared_ptr<Node> Parser::parseExpression()
     if (m_tokens.front().type == TokenType::PLUS)
     {
       m_tokens.pop_front();
-      auto term2 = parseTerm();
+      auto term2 = parseExpression();
       return std::make_shared<AdditionNode>(std::vector{term1, term2});
     }
     else if (m_tokens.front().type == TokenType::MINUS)
     {
       m_tokens.pop_front();
-      auto term2 = parseTerm();
+      auto term2 = parseExpression();
       return std::make_shared<SubstractionNode>(std::vector{term1, term2});
     }
   }

@@ -25,6 +25,12 @@ TEST_F(ParserTests, Addition)
   EXPECT_TRUE(node);
 }
 
+TEST_F(ParserTests, Addition2)
+{
+  auto node = dynamic_cast<AdditionNode *>(parse("1 + 2 + 3").get());
+  EXPECT_TRUE(node);
+}
+
 TEST_F(ParserTests, Substraction)
 {
   auto node = dynamic_cast<SubstractionNode *>(parse("1 - 2").get());
