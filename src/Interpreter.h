@@ -7,5 +7,5 @@
 class Interpreter
 {
 public:
-  ReturnValue eval(const std::shared_ptr<Node> i_node) const;
+  Value eval(const std::shared_ptr<Node> i_node) const;
 };

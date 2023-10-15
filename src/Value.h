@@ -4,7 +4,7 @@
 
 #include <typeinfo>
 
-class ReturnValue
+class Value
 {
 private:
   int m_integerValue;
@@ -12,8 +12,8 @@ private:
   bool m_isInteger;
 
 public:
-  ReturnValue(int i_value) : m_integerValue(i_value), m_isInteger(true){};
-  ReturnValue(double i_value) : m_floatValue(i_value), m_isInteger(false){};
+  Value(int i_value) : m_integerValue(i_value), m_isInteger(true){};
+  Value(double i_value) : m_floatValue(i_value), m_isInteger(false){};
 
   bool isInteger() { return m_isInteger; }
 
@@ -21,13 +21,13 @@ public:
   T get()
   {
     std::ostringstream type;
-    type << "ReturnValue::get<" << typeid(T).name() << ">";
+    type << "Value::get<" << typeid(T).name() << ">";
     throw UnknownImplementationException(type.str());
   };
 };
 
 template <>
-inline int ReturnValue::get<int>()
+inline int Value::get<int>()
 {
   if (!m_isInteger)
     throw WrongValueTypeException("int");
@@ -35,7 +35,7 @@ inline int ReturnValue::get<int>()
 }
 
 template <>
-inline double ReturnValue::get<double>()
+inline double Value::get<double>()
 {
   if (m_isInteger)
     return static_cast<double>(m_integerValue);

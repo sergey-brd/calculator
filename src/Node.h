@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Exception.h"
-#include "ReturnValue.h"
+#include "Value.h"
 
 #include <memory>
 #include <vector>
@@ -9,7 +9,7 @@
 class Node
 {
 public:
-  virtual ReturnValue eval() const = 0;
+  virtual Value eval() const = 0;
   virtual ~Node() = default;
 };
 
@@ -19,9 +19,9 @@ class ArityNode : public Node
 protected:
   std::vector<std::shared_ptr<Node>> m_nodes;
 
-  std::vector<ReturnValue> evalNodes() const
+  std::vector<Value> evalNodes() const
   {
-    std::vector<ReturnValue> ret;
+    std::vector<Value> ret;
     for (int i = 0; i < m_nodes.size(); ++i)
       ret.emplace_back(m_nodes[i]->eval());
 

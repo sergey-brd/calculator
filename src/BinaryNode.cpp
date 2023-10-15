@@ -1,6 +1,6 @@
 #include "BinaryNode.h"
 
-ReturnValue AdditionNode::eval() const
+Value AdditionNode::eval() const
 {
   auto params = evalNodes();
   if (params[0].isInteger() && params[1].isInteger())
@@ -8,7 +8,7 @@ ReturnValue AdditionNode::eval() const
   return params[0].get<double>() + params[1].get<double>();
 }
 
-ReturnValue SubstractionNode::eval() const
+Value SubstractionNode::eval() const
 {
   auto params = evalNodes();
   if (params[0].isInteger() && params[1].isInteger())
@@ -16,7 +16,7 @@ ReturnValue SubstractionNode::eval() const
   return params[0].get<double>() - params[1].get<double>();
 }
 
-ReturnValue MultiplicationNode::eval() const
+Value MultiplicationNode::eval() const
 {
   auto params = evalNodes();
   if (params[0].isInteger() && params[1].isInteger())
@@ -24,7 +24,7 @@ ReturnValue MultiplicationNode::eval() const
   return params[0].get<double>() * params[1].get<double>();
 }
 
-ReturnValue DivisionNode::eval() const
+Value DivisionNode::eval() const
 {
   auto params = evalNodes();
   if (params[0].isInteger() && params[1].isInteger())

@@ -1,30 +1,30 @@
-#include "ReturnValue.h"
+#include "Value.h"
 
 #include <gtest/gtest.h>
 
-TEST(RetrunValueTests, Integer)
+TEST(ValueTests, Integer)
 {
-  ReturnValue valueInt(3);
+  Value valueInt(3);
   EXPECT_TRUE(valueInt.isInteger());
   EXPECT_EQ(valueInt.get<int>(), 3);
   EXPECT_NEAR(valueInt.get<double>(), 3, 0.001);
 }
 
-TEST(RetrunValueTests, Float)
+TEST(ValueTests, Float)
 {
-  ReturnValue valueFloat(3.14);
+  Value valueFloat(3.14);
   EXPECT_FALSE(valueFloat.isInteger());
   EXPECT_NEAR(valueFloat.get<double>(), 3.14, 0.001);
 }
 
-TEST(RetrunValueTests, UnknownImplementationException)
+TEST(ValueTests, UnknownImplementationException)
 {
-  ReturnValue valueInt(3);
+  Value valueInt(3);
   EXPECT_THROW(valueInt.get<float>(), UnknownImplementationException);
 }
 
-TEST(RetrunValueTests, WrongValueTypeException)
+TEST(ValueTests, WrongValueTypeException)
 {
-  ReturnValue valueFloat(3.14);
+  Value valueFloat(3.14);
   EXPECT_THROW(valueFloat.get<int>(), WrongValueTypeException);
 }

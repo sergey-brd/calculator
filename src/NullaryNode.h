@@ -11,7 +11,7 @@ private:
 
 public:
   IntegerNode(const std::string &i_int);
-  ReturnValue eval() const override;
+  Value eval() const override;
 };
 
 class FloatNode : public ArityNode<0>
@@ -21,5 +21,5 @@ private:
 
 public:
   FloatNode(const std::string &i_float);
-  ReturnValue eval() const override;
+  Value eval() const override;
 };

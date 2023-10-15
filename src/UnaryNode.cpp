@@ -2,13 +2,13 @@
 
 #include <cmath>
 
-ReturnValue UnaryPlusNode::eval() const
+Value UnaryPlusNode::eval() const
 {
   auto params = evalNodes();
   return params.at(0);
 }
 
-ReturnValue UnaryMinusNode::eval() const
+Value UnaryMinusNode::eval() const
 {
   auto params = evalNodes();
   if (params[0].isInteger())
@@ -16,13 +16,13 @@ ReturnValue UnaryMinusNode::eval() const
   return -params[0].get<double>();
 }
 
-ReturnValue SinNode::eval() const
+Value SinNode::eval() const
 {
   auto params = evalNodes();
   return std::sin(params[0].get<double>());
 }
 
-ReturnValue CosNode::eval() const
+Value CosNode::eval() const
 {
   auto params = evalNodes();
   return std::cos(params[0].get<double>());
