@@ -123,3 +123,11 @@ TEST(BinaryNodeTests, DivisionNodeFloat2)
   EXPECT_FALSE(value.isInteger());
   EXPECT_NEAR(value.get<double>(), 1.0 / 2, 0.001);
 }
+
+TEST(BinaryNodeTests, DivisionByZeroException)
+{
+  std::vector<std::shared_ptr<Node>> nodes = {std::make_shared<IntegerNode>("1"),
+                                              std::make_shared<IntegerNode>("0")};
+  auto node = std::make_shared<DivisionNode>(nodes);
+  EXPECT_THROW(node->eval(), std::runtime_error);
+}
