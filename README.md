@@ -43,8 +43,10 @@ To use the console calculator, follow these steps:
 
 3. View the result on the screen.
 
-Calculator supports the following operation: +, -, *, /, sin, cos
+Calculator supports the following operations: +, -, *, /, sin, cos
+
 Calculator uses C++ rule for return value:
+
     ```
     -5 / 2 == -2
     -5 / 2. == -2.5
