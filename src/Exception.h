@@ -133,3 +133,23 @@ public:
     return m_error.c_str();
   }
 };
+
+class SymbolConvertionException : public std::runtime_error
+{
+  std::string m_symbol;
+  std::string m_error;
+
+public:
+  SymbolConvertionException(const std::string &i_symbol)
+      : std::runtime_error(""), m_symbol(i_symbol)
+  {
+    std::ostringstream error;
+    error << "Cannot convert " << m_symbol << " to valid token.";
+    m_error = error.str();
+  };
+
+  const char *what() const noexcept
+  {
+    return m_error.c_str();
+  }
+};

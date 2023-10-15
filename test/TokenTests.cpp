@@ -1,5 +1,7 @@
 #include "Token.h"
 
+#include "Exception.h"
+
 #include <gtest/gtest.h>
 
 TEST(Token, Integer)
@@ -59,8 +61,7 @@ TEST(Token, Divide)
   EXPECT_EQ(token.type, TokenType::DIVIDE);
 }
 
-TEST(Token, Operator)
+TEST(Token, SymbolConvertionException)
 {
-  Token token("!", TokenType::SYMBOL);
-  EXPECT_EQ(token.type, TokenType::OPERATOR);
+  EXPECT_THROW({ Token token("!", TokenType::SYMBOL); }, SymbolConvertionException);
 }

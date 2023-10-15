@@ -1,32 +1,31 @@
 #include "Token.h"
 
-#include <cassert>
+#include "Exception.h"
 
-static TokenType convertSymbolToOperator(char i_c)
+static TokenType convertSymbolToOperator(const std::string &i_word)
 {
-  switch (i_c)
-  {
-  case '(':
-    return TokenType::OPENING_BRACKET;
-  case ')':
-    return TokenType::CLOSING_BRACKET;
-  case '+':
-    return TokenType::PLUS;
-  case '-':
-    return TokenType::MINUS;
-  case '*':
-    return TokenType::MULTIPLY;
-  case '/':
-    return TokenType::DIVIDE;
-  }
-  return TokenType::OPERATOR;
+  if (i_word.size() == 1)
+    switch (i_word[0])
+    {
+    case '(':
+      return TokenType::OPENING_BRACKET;
+    case ')':
+      return TokenType::CLOSING_BRACKET;
+    case '+':
+      return TokenType::PLUS;
+    case '-':
+      return TokenType::MINUS;
+    case '*':
+      return TokenType::MULTIPLY;
+    case '/':
+      return TokenType::DIVIDE;
+    }
+
+  throw SymbolConvertionException(i_word);
 }
 
 Token::Token(const std::string &i_value, TokenType i_type) : value(i_value), type(i_type)
 {
   if (type == TokenType::SYMBOL)
-  {
-    assert(value.size() == 1);
-    type = convertSymbolToOperator(value[0]);
-  }
+    type = convertSymbolToOperator(i_value);
 };
