@@ -72,3 +72,24 @@ public:
     return m_error.c_str();
   }
 };
+
+class WrongArgumentNumberException : public std::runtime_error
+{
+  int m_actual;
+  int m_expected;
+  std::string m_error;
+
+public:
+  WrongArgumentNumberException(int i_actual, int i_expected)
+      : std::runtime_error(""), m_actual(i_actual), m_expected(i_expected)
+  {
+    std::ostringstream error;
+    error << "Expected " << m_expected << " argument(s), but " << m_actual << " passed.";
+    m_error = error.str();
+  };
+
+  const char *what() const noexcept
+  {
+    return m_error.c_str();
+  }
+};

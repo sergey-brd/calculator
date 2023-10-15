@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Exception.h"
 #include "ReturnValue.h"
 
-#include <cassert>
 #include <memory>
 #include <vector>
 
@@ -31,6 +31,7 @@ protected:
 public:
   ArityNode(const std::vector<std::shared_ptr<Node>> &i_nodes) : m_nodes(i_nodes)
   {
-    assert(m_nodes.size() == N);
+    if (m_nodes.size() != N)
+      throw WrongArgumentNumberException(m_nodes.size(), N);
   }
 };
