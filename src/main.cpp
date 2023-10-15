@@ -12,6 +12,8 @@ int main()
   Interpreter interpreter;
   while (std::getline(std::cin, input))
   {
+    if (input.empty())
+      break;
     try
     {
       auto lexemes = Lexer::tokenize(input);
@@ -19,7 +21,7 @@ int main()
       auto result = interpreter.eval(node);
       std::cout << (result.isInteger() ? result.get<int>() : result.get<double>()) << std::endl;
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
       std::cout << e.what() << std::endl;
     }
