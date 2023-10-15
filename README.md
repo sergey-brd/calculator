@@ -1,5 +1,7 @@
 # Calculator
 
+[![CMake on multiple platforms](https://github.com/sergey-brd/calculator/actions/workflows/cmake-multi-platform.yml/badge.svg?branch=main)](https://github.com/sergey-brd/calculator/actions/workflows/cmake-multi-platform.yml)
+
 This is console calculator. This application written in C++. It is intended to perform basic mathematical operations through the command line.
 
 ## Installation
