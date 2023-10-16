@@ -53,3 +53,5 @@ Calculator uses C++ rule for return value:
 -5 / 2 == -2
 -5 / 2. == -2.5
 ```
+
+For exit enter empty line or press Ctrl+D (for Linux) or Ctrl+Z (for Windows)
